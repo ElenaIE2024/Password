@@ -16,9 +16,9 @@ namespace PasswordApp
             string s = Console.ReadLine();
             Password password = new Password(s);
             if (password.CheckPassword())
-                Console.WriteLine("Yes!");
+                Console.WriteLine("Пароль соответствует требованиям");
             else
-                Console.WriteLine("No...");
+                Console.WriteLine("Пароль не соответствует требованиям");
             Console.ReadKey();
         }
     }
