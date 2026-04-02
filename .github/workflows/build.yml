@@ -23,7 +23,7 @@ jobs:
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /t:Rebuild
       
     - name: Run Tests
-      run: dotnet test PasswordApp/PasswordApp.sln --configuration Release --no-build --verbosity normal     
+      run: dotnet test PasswordApp/PasswordApp.sln --configuration Release --verbosity normal     
 
     - name: Publish
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishDir=publish/
