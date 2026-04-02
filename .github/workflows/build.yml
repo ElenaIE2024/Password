@@ -22,23 +22,8 @@ jobs:
     - name: Build
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /t:Rebuild
       
-    - name: Run Tests (vstest for .NET Framework)
-      run: |
-        # Явно собираем проект тестов, чтобы убедиться в наличии DLL
-        msbuild TestPassword/TestPassword/TestPassword.csproj /p:Configuration=Release /t:Rebuild
-        
-        # Путь к скомпилированной DLL с тестами
-        $testDll = "TestPassword/TestPassword/bin/Release/TestPassword.dll"
-        
-        # Проверяем, существует ли файл
-        if (Test-Path $testDll) {
-            Write-Host "✅ Test assembly found: $testDll"
-            # Запускаем тесты через встроенный раннер Visual Studio
-            vstest.console.exe $testDll /Platform:x64 /Framework:Framework472 /Logger:console;verbosity=detailed
-        } else {
-            Write-Error "❌ Test assembly not found: $testDll"
-            exit 1
-        }  
+    - name: Run Tests
+      run: dotnet test PasswordApp/PasswordApp.sln --configuration Release --verbosity normal
 
     - name: Publish
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishDir=publish/
