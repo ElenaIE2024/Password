@@ -17,7 +17,7 @@ namespace PasswordLibrary
         }
         public bool CheckPassword()
         {
-            Regex digit = new Regex(@"^\d");
+            Regex digit = new Regex(@"\d");
             if (myPassword.Length < 6)
                 return false;
             else
