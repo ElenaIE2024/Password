@@ -29,6 +29,7 @@ jobs:
     - name: Copy Published Files
       if: success()
       run: |
+        New-Item -ItemType Directory -Force -Path ./publish
         # Копируем файлы из папки публикации, созданной msbuild
         $source = "PasswordApp/PasswordApp/bin/Release/net472/publish"
         $dest = "./publish"
