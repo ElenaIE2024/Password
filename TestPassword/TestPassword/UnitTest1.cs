@@ -11,7 +11,7 @@ namespace TestPassword
         [TestMethod]
         public void PasswordNOKLength()
         {
-            Password psw = new Password("7ff");
+            Password psw = new Password("7fa");
             Assert.IsFalse(psw.CheckPassword());
         }
         [TestMethod]
