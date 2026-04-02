@@ -24,12 +24,17 @@ jobs:
 
     - name: Publish
       if: success()
-      run: dotnet publish PasswordApp/PasswordApp/PasswordApp.csproj -c Release -o ./publish
+      run: msbuild PasswordApp/PasswordApp/PasswordApp.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
 
-    - name: Upload Published Files
+    - name: Copy Published Files
       if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: PasswordApp-Published
-        path: PasswordApp/PasswordApp/bin/Release/
-  
+      run: |
+        # Копируем файлы из папки публикации, созданной msbuild
+        $source = "PasswordApp/PasswordApp/bin/Release/net472/publish"
+        $dest = "./publish"
+        if (Test-Path $source) {
+            Copy-Item -Path "$source/*" -Destination $dest -Recurse -Force
+        } else {
+            # Если папка publish не создана, копируем из bin/Release
+            Copy-Item -Path "PasswordApp/PasswordApp/bin/Release/*" -Destination $dest -Recurse -Force -Exclude "*.pdb"
+        }
