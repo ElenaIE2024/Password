@@ -17,7 +17,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2    
       
     - name: Restore NuGet packages
-      run: nuget restore PasswordApp/PasswordApp.sln
+      run: dotnet restore PasswordApp/PasswordApp.sln
 
     - name: Build
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /t:Rebuild
