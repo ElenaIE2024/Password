@@ -38,3 +38,11 @@ jobs:
             # Если папка publish не создана, копируем из bin/Release
             Copy-Item -Path "PasswordApp/PasswordApp/bin/Release/*" -Destination $dest -Recurse -Force -Exclude "*.pdb"
         }
+        
+    - name: Upload Published Files
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: PasswordApp-Published    # Имя архива для скачивания
+        path: ./publish                # Папка с файлами для загрузки
+        retention-days: 7             # Срок хранения (опционально, по умолчанию 90 дней)
