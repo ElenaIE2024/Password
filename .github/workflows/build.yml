@@ -20,15 +20,17 @@ jobs:
       run: dotnet restore PasswordApp/PasswordApp.sln
 
     - name: Build
-      run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /t:Rebuild
+      run: dotnet build PasswordApp/PasswordApp.sln --configuration Release --no-restore
       
     - name: Run Tests
       run: dotnet test PasswordApp/PasswordApp.sln --configuration Release --verbosity normal
 
     - name: Publish
-      run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishDir=publish/
+      if: success()
+      run: dotnet publish PasswordApp/PasswordApp/PasswordApp.csproj -c Release -o ./publish
 
     - name: Upload Published Files
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: PasswordApp-Published
