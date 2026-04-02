@@ -21,6 +21,9 @@ jobs:
 
     - name: Build
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /t:Rebuild
+      
+    - name: Run Tests
+      run: msbuild PasswordApp/PasswordApp.sln /t:VSTest /p:Configuration=Release     
 
     - name: Publish
       run: msbuild PasswordApp/PasswordApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishDir=publish/
